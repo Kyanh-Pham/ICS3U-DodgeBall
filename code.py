@@ -16,7 +16,7 @@ def game_scene():
 
     background = stage.Grid(image_bank_background, 10, 8)
 
-    ship = stage.Sprite(image_bank_sprites, 5, 75 ,66)
+    ship = stage.Sprite(image_bank_sprites, 5, 75, 66)
 
     game = stage.Stage(ugame.display, 60)
     game.layers = [ship] + [background]
@@ -29,4 +29,4 @@ def game_scene():
 
 
 if __name__ == "__main__":
-   game_scene()
+    game_scene()
