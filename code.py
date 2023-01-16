@@ -21,8 +21,15 @@ def game_scene():
         image_bank_sprites, 5, 75, constants.SCREEN_Y - (2 * constants.SPRITE_SIZE)
     )
 
+    ball = stage.Sprite(
+        image_bank_sprites,
+        9,
+        int(constants.SCREEN_X / 2 - constants.SPRITE_SIZE / 2),
+        16,
+    )
+
     game = stage.Stage(ugame.display, 60)
-    game.layers = [player] + [background]
+    game.layers = [player] + [ball] + [background]
     game.render_block()
 
     # repeat forever, game loop
