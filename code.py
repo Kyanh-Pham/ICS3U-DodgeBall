@@ -6,7 +6,7 @@
 
 import random
 import time
-
+import supervisor
 import constants
 import stage
 import ugame
@@ -224,7 +224,74 @@ def game_scene():
                     score_text.move(1, 1)
                     score_text.text("Score: {0}".format(score))
 
-        game.render_sprites(balls + [player])
+        for ball_number in range(len(balls)):
+            if balls[ball_number].x > 0:
+                if stage.collide(
+                    balls[ball_number].x + 1,
+                    balls[ball_number].y,
+                    balls[ball_number].x + 15,
+                    balls[ball_number].y + 15,
+                    player.x,
+                    player.y,
+                    player.x + 15,
+                    player.y + 15,
+                ):
+                    # alien hit the ship
+                    sound.stop()
+                    sound.play(crash_sound)
+                    time.sleep(3.0)
+                    game_over_scene(score)
+        # redraw sprite list
+        game.render_sprites([player] + ball)
+        game.tick()
+
+
+def game_over_scene(final_score):
+    # this function is the game over scene
+
+    # image banks for CircuitPython
+    image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
+
+    # sets the background to image 0 in the image bank
+    background = stage.Grid(
+        image_bank_2, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+    )
+
+    # add text objects
+    text = []
+    text1 = stage.Text(
+        width=29, height=14, font=None, palette=constants.BLUE_PALETTE, buffer=None
+    )
+    text1.move(22, 20)
+    text1.text("Final Score: {:0>2d}".format(final_score))
+    text.append(text1)
+
+    text2 = stage.Text(
+        width=29, height=14, font=None, palette=constants.BLUE_PALETTE, buffer=None
+    )
+    text2.move(43, 60)
+    text2.text("YOU'RE OUT!")
+    text.append(text2)
+
+    text3 = stage.Text(
+        width=29, height=14, font=None, palette=constants.BLUE_PALETTE, buffer=None
+    )
+    text3.move(32, 110)
+    text3.text("PRESS SELECT")
+    text.append(text3)
+
+    game = stage.Stage(ugame.display, constants.FPS)
+    game.layers = text + [background]
+    game.render_block()
+
+    # repeat forever, game loop
+    while True:
+        # get user input
+        keys = ugame.buttons.get_pressed()
+
+        if keys & ugame.K_SELECT != 0:
+            supervisor.reload()
+
         game.tick()
 
 
