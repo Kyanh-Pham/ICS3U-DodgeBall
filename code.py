@@ -4,15 +4,49 @@
 # Created on: Jan 20223
 # This program is the "DodgeBall" program on the PyBadge
 
+import random
+import time
+
 import constants
 import stage
 import ugame
 
 
+def splash_scene():
+    # this function is the splash scene game loop
+
+    # get sound ready
+    coin_sound = open("coin.wav", "rb")
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
+    sound.play(coin_sound)
+
+    # an image bank for CircuitPython
+    image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
+
+    # sets the background to image 0 in the bank
+    background = stage.Grid(
+        image_bank_mt_background, constants.SCREEN_X, constants.SCREEN_Y
+    )
+
+    # create a stage for the background to show up on
+    #  and set the frame rate to 60fps
+    game = stage.Stage(ugame.display, constants.FPS)
+    # set the layers, items show up in order
+    game.layers = [background]
+    # render background
+    game.render_block()
+
+    while True:
+        time.sleep(1.0)
+        menu_scene()
+
+
 def menu_scene():
     # This function is the main game game_scene
 
-    image_bank_background = stage.Bank.from_bmp16("dodgeball_background.bmp")
+    image_bank_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
 
     # add text objects
     text = []
@@ -32,8 +66,36 @@ def menu_scene():
 
     # set the background to image 0 in the image bank
     background = stage.Grid(
-        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+        image_bank_background, constants.SCREEN_X, constants.SCREEN_Y
     )
+
+    background.tile(2, 2, 0)  # blank white
+    background.tile(3, 2, 1)
+    background.tile(4, 2, 2)
+    background.tile(5, 2, 3)
+    background.tile(6, 2, 4)
+    background.tile(7, 2, 0)  # blank white
+
+    background.tile(2, 3, 0)  # blank white
+    background.tile(3, 3, 5)
+    background.tile(4, 3, 6)
+    background.tile(5, 3, 7)
+    background.tile(6, 3, 8)
+    background.tile(7, 3, 0)  # blank white
+
+    background.tile(2, 4, 0)  # blank white
+    background.tile(3, 4, 9)
+    background.tile(4, 4, 10)
+    background.tile(5, 4, 11)
+    background.tile(6, 4, 12)
+    background.tile(7, 4, 0)  # blank white
+
+    background.tile(2, 5, 0)  # blank white
+    background.tile(3, 5, 0)
+    background.tile(4, 5, 13)
+    background.tile(5, 5, 14)
+    background.tile(6, 5, 0)
+    background.tile(7, 5, 0)  # blank white
 
     # create a stage for the background to show up on
     #  and set the frame rate to 60 fps
@@ -111,4 +173,4 @@ def game_scene():
 
 
 if __name__ == "__main__":
-    menu_scene()
+    splash_scene()
