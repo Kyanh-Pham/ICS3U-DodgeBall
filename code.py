@@ -119,6 +119,18 @@ def menu_scene():
 def game_scene():
     # This function is the main game game_scene
 
+    # for score
+    ball_count = 0
+    score = 0
+
+    score_text = stage.Text(
+        width=29, height=14, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    score_text.clear()
+    score_text.cursor(0, 0)
+    score_text.move(1, 1)
+    score_text.text("Score: {0}".format(score))
+
     def show_ball():
         # this function takes an alien from off screen and moves it on screen
         for ball_number in range(len(balls)):
@@ -161,7 +173,7 @@ def game_scene():
     show_ball()
 
     game = stage.Stage(ugame.display, 60)
-    game.layers = balls + [player] + [background]
+    game.layers = [score_text] + [player] + balls + [background]
     game.render_block()
 
     # repeat forever, game loop
@@ -204,6 +216,13 @@ def game_scene():
                         constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
                     )
                     show_ball()
+                    show_ball()
+                    show_ball()
+                    score = score + 1
+                    score_text.clear()
+                    score_text.cursor(0, 0)
+                    score_text.move(1, 1)
+                    score_text.text("Score: {0}".format(score))
 
         game.render_sprites(balls + [player])
         game.tick()
