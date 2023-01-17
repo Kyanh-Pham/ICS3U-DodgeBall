@@ -119,6 +119,19 @@ def menu_scene():
 def game_scene():
     # This function is the main game game_scene
 
+    def show_ball():
+        # this function takes an alien from off screen and moves it on screen
+        for ball_number in range(len(balls)):
+            if balls[ball_number].x < 0:
+                balls[ball_number].move(
+                    random.randint(
+                        0 + constants.SPRITE_SIZE,
+                        constants.SCREEN_X - constants.SPRITE_SIZE,
+                    ),
+                    constants.OFF_TOP_SCREEN,
+                )
+                break
+
     image_bank_background = stage.Bank.from_bmp16("dodgeball_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("dodgeball_sprite.bmp")
 
@@ -137,8 +150,18 @@ def game_scene():
         16,
     )
 
+    # create list of lasers for when we shoot
+    balls = []
+    for ball_number in range(constants.TOTAL_NUMBER_OF_BALLS):
+        a_single_ball = stage.Sprite(
+            image_bank_sprites, 9, constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
+        )
+        balls.append(a_single_ball)
+    # place 1 alien on the screen
+    show_ball()
+
     game = stage.Stage(ugame.display, 60)
-    game.layers = [player] + [ball] + [background]
+    game.layers = balls + [player] + [background]
     game.render_block()
 
     # repeat forever, game loop
@@ -168,7 +191,21 @@ def game_scene():
             pass
         if keys & ugame.K_DOWN:
             pass
-        game.render_sprites([player] + [ball])
+
+            # each frame move the aliens down, that are on the screen
+        for ball_number in range(len(balls)):
+            if balls[ball_number].x > 0:
+                balls[ball_number].move(
+                    balls[ball_number].x,
+                    balls[ball_number].y + constants.BALL_SPEED,
+                )
+                if balls[ball_number].y > constants.SCREEN_Y:
+                    balls[ball_number].move(
+                        constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y
+                    )
+                    show_ball()
+
+        game.render_sprites(balls + [player])
         game.tick()
 
 
