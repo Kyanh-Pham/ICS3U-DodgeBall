@@ -6,9 +6,10 @@
 
 import random
 import time
-import supervisor
+
 import constants
 import stage
+import supervisor
 import ugame
 
 
@@ -17,6 +18,7 @@ def splash_scene():
 
     # get sound ready
     coin_sound = open("coin.wav", "rb")
+    boom_sound = open("boom.wav", "rb")
     sound = ugame.audio
     sound.stop()
     sound.mute(False)
@@ -147,6 +149,12 @@ def game_scene():
     image_bank_background = stage.Bank.from_bmp16("dodgeball_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("dodgeball_sprite.bmp")
 
+    # get sound ready
+    boom_sound = open("boom.wav", "rb")
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
+
     background = stage.Grid(
         image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
@@ -242,7 +250,7 @@ def game_scene():
                     time.sleep(3.0)
                     game_over_scene(score)
         # redraw sprite list
-        game.render_sprites([player] + ball)
+        game.render_sprites([player] + balls)
         game.tick()
 
 
