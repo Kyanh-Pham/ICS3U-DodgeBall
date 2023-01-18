@@ -238,7 +238,7 @@ def game_scene():
                 ):
                     # alien hit the ship
                     sound.stop()
-                    sound.play(crash_sound)
+                    sound.play(boom_sound)
                     time.sleep(3.0)
                     game_over_scene(score)
         # redraw sprite list
