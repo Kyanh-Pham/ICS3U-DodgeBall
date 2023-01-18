@@ -207,10 +207,18 @@ def game_scene():
                 player.move((player.x - constants.SPRITE_MOVEMENT_SPEED), player.y)
             else:
                 player.move(0, player.y)
+
         if keys & ugame.K_UP:
-            pass
+            if player.y >= 0:
+                player.move(player.x, (player.y + constants.SPRITE_MOVEMENT_SPEED))
+            else:
+                player.move(player.x, (constants.SCREEN_Y + constants.SPRITE_SIZE))
+
         if keys & ugame.K_DOWN:
-            pass
+            if player.y <= (constants.SCREEN_Y - constants.SPRITE_SIZE):
+                player.move(player.x, (player.y + constants.SPRITE_MOVEMENT_SPEED))
+            else:
+                player.move(player.x, (constants.SCREEN_Y - constants.SPRITE_SIZE))
 
             # each frame move the aliens down, that are on the screen
         for ball_number in range(len(balls)):
