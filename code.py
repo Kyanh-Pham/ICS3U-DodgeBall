@@ -188,7 +188,7 @@ def game_scene():
     while True:
         # get user input
         keys = ugame.buttons.get_pressed()
-        
+
         if keys & ugame.K_RIGHT:
             if player.x <= (constants.SCREEN_X - constants.SPRITE_SIZE):
                 player.move((player.x + constants.SPRITE_MOVEMENT_SPEED), player.y)
