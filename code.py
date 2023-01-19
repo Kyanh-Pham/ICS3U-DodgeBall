@@ -188,14 +188,7 @@ def game_scene():
     while True:
         # get user input
         keys = ugame.buttons.get_pressed()
-        if keys & ugame.K_X:
-            pass
-        if keys & ugame.K_O:
-            pass
-        if keys & ugame.K_START:
-            pass
-        if keys & ugame.K_SELECT:
-            pass
+        
         if keys & ugame.K_RIGHT:
             if player.x <= (constants.SCREEN_X - constants.SPRITE_SIZE):
                 player.move((player.x + constants.SPRITE_MOVEMENT_SPEED), player.y)
@@ -209,10 +202,10 @@ def game_scene():
                 player.move(0, player.y)
 
         if keys & ugame.K_UP:
-            if player.y >= 0:
-                player.move(player.x, (player.y + constants.SPRITE_MOVEMENT_SPEED))
+            if player.y >= (constants.OFF_TOP_SCREEN):
+                player.move(player.x, (player.y - constants.SPRITE_MOVEMENT_SPEED))
             else:
-                player.move(player.x, (constants.SCREEN_Y + constants.SPRITE_SIZE))
+                player.move(player.x, 0)
 
         if keys & ugame.K_DOWN:
             if player.y <= (constants.SCREEN_Y - constants.SPRITE_SIZE):
