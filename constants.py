@@ -13,11 +13,19 @@ FPS = 60
 SPRITE_MOVEMENT_SPEED = 1
 TOTAL_NUMBER_OF_BALLS = 5
 BALL_SPEED = 1
-PLAYER_SPEED = 1
+PLAYER_SPEED = 2
 OFF_SCREEN_X = -100
 OFF_SCREEN_Y = -100
 OFF_TOP_SCREEN = -1 * SPRITE_SIZE
 OFF_BOTTOM_SCREEN = SCREEN_Y + SPRITE_SIZE
+
+# Using for button state
+button_state = {
+    "button_up": "up",
+    "button_just_pressed": "just pressed",
+    "button_still_pressed": "still pressed",
+    "button_released": "released",
+}
 
 #  pallet for red filled text
 WHITE_BLANK_PALETTE = (

@@ -306,3 +306,4 @@ def game_over_scene(final_score):
 
 if __name__ == "__main__":
     splash_scene()
+    
