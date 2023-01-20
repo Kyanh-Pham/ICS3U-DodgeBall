@@ -139,7 +139,7 @@ def game_scene():
             if balls[ball_number].x < 0:
                 balls[ball_number].move(
                     random.randint(
-                        0 + constants.SPRITE_SIZE,
+                        0,
                         constants.SCREEN_X - constants.SPRITE_SIZE,
                     ),
                     constants.OFF_TOP_SCREEN,
